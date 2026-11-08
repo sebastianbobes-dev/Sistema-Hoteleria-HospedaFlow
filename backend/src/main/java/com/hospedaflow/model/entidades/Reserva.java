@@ -40,6 +40,8 @@ public class Reserva {
         this.habitacionAsignada = habitacion;
     }
 
+
+    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -104,7 +106,7 @@ public class Reserva {
         this.ofertaAplicada = ofertaAplicada;
     }
 
-    // Getters y Setters
+    
     
     
     

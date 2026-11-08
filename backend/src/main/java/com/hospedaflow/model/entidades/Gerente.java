@@ -7,7 +7,7 @@ public class Gerente extends Usuario {
         this.setRol(RolUsuario.GERENTE);
     }
 
-    public Gerente(long id, String nombre, String correo, String contrasena, String telefono) {
+    public Gerente(Long id, String nombre, String correo, String contrasena, String telefono) {
         super(id, nombre, correo, contrasena, telefono, RolUsuario.GERENTE);
     }
     

@@ -1,8 +1,10 @@
 package com.hospedaflow.model.entidades;
+
+
 import com.hospedaflow.model.enums.RolUsuario;
 
 public abstract class Usuario {
-    private long id;
+    private Long id;
     private String nombre;
     private String correo;
     private String contrasena;
@@ -11,7 +13,7 @@ public abstract class Usuario {
 
     public Usuario(){}
 
-    public Usuario(long id, String nombre, String correo, String contrasena, String telefono, RolUsuario rol) {
+    public Usuario(Long id, String nombre, String correo, String contrasena, String telefono, RolUsuario rol) {
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;
@@ -25,10 +27,10 @@ public abstract class Usuario {
     }
 
     //getter y setter
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

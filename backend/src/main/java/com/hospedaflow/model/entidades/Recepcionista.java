@@ -6,7 +6,7 @@ public class Recepcionista extends Usuario {
         super();
         this.setRol(RolUsuario.RECEPCIONISTA);
     }    
-    public Recepcionista(long id, String nombre, String correo, String contrasena, String telefono) {
+    public Recepcionista(Long id, String nombre, String correo, String contrasena, String telefono) {
         super(id, nombre, correo, contrasena, telefono, RolUsuario.RECEPCIONISTA);
     }
 }
