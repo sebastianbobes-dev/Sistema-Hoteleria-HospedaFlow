@@ -76,6 +76,36 @@
     </div>
 </div>
 
+<!-- Modal: modificar fechas de una reserva (solo personal del hotel) -->
+<div class="modal fade" id="modalFechas" tabindex="-1" aria-labelledby="tituloModalFechas" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formModificarFechas" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tituloModalFechas">Modificar fechas de la reserva</h5>
+                    <button type="button" class="btn-close" id="btnCerrarModalFechas" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="modReservaId">
+                    <p class="text-muted" id="modCodigoReserva"></p>
+                    <div class="mb-3">
+                        <label for="modFechaEntrada" class="form-label">Nueva fecha de entrada</label>
+                        <input type="date" id="modFechaEntrada" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modFechaSalida" class="form-label">Nueva fecha de salida</label>
+                        <input type="date" id="modFechaSalida" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCancelarModalFechas" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-hospeda" id="btnGuardarFechas">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/comun.js"></script>
 <script src="/js/reservas.js"></script>

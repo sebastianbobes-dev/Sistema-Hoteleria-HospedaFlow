@@ -1,8 +1,10 @@
 /**
- * reservas.js - Registro, consulta, confirmación y cancelación de reservas.
+ * reservas.js - Registro, consulta, modificación de fechas, confirmación y cancelación de reservas.
  * Consume: ReservaRestController -> /api/reservas
  *   GET /api/reservas                 lista reservas
  *   POST /api/reservas                registra (ReservaRequestDTO)
+ *   PUT /api/reservas/{id}/fechas     modifica fechas (body: { fechaEntrada, fechaSalida })
+ *                                     NOTA: endpoint pendiente de agregar en ReservaRestController
  *   PUT /api/reservas/{id}/confirmar  confirma
  *   PUT /api/reservas/{id}/cancelar   cancela
  * ReservaRequestDTO: { codigoReserva, fechaEntrada, fechaSalida, huespedId, habitacionId, ofertaId }
@@ -80,6 +82,9 @@ function renderizarReservas() {
         if (esPersonal(sesion) && estado === 'PENDIENTE') {
             botones.push(`<button class="btn btn-sm btn-success btn-confirmar" data-id="${escapeHtml(r.id)}">Confirmar</button>`);
         }
+        if (esPersonal(sesion) && estado !== 'CANCELADA') {
+            botones.push(`<button class="btn btn-sm btn-outline-primary btn-modificar" data-id="${escapeHtml(r.id)}">Modificar fechas</button>`);
+        }
         if (estado !== 'CANCELADA') {
             botones.push(`<button class="btn btn-sm btn-outline-danger btn-cancelar" data-id="${escapeHtml(r.id)}">Cancelar</button>`);
         }
@@ -147,6 +152,46 @@ async function cambiarEstadoReserva(id, accion, mensajeOk) {
     }
 }
 
+/** Abre el modal con las fechas actuales de la reserva seleccionada. */
+function abrirModalFechas(id) {
+    const reserva = reservas.find(r => String(r.id) === String(id));
+    if (!reserva) {
+        mostrarAlerta('No se encontró la reserva seleccionada.', 'danger');
+        return;
+    }
+    document.getElementById('modReservaId').value = reserva.id;
+    document.getElementById('modCodigoReserva').textContent = `Reserva ${reserva.codigoReserva}`;
+    document.getElementById('modFechaEntrada').value = formatearFecha(reserva.fechaEntrada);
+    document.getElementById('modFechaSalida').value = formatearFecha(reserva.fechaSalida);
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('modalFechas')).show();
+}
+
+async function guardarNuevasFechas(evento) {
+    evento.preventDefault();
+    const id = document.getElementById('modReservaId').value;
+    const fechaEntrada = document.getElementById('modFechaEntrada').value;
+    const fechaSalida = document.getElementById('modFechaSalida').value;
+
+    if (!fechaEntrada || !fechaSalida) { mostrarAlerta('Indica las fechas de entrada y salida.', 'warning'); return; }
+    if (fechaEntrada >= fechaSalida) { mostrarAlerta('La fecha de entrada debe ser anterior a la de salida.', 'warning'); return; }
+
+    const boton = document.getElementById('btnGuardarFechas');
+    boton.disabled = true;
+    try {
+        await apiFetch(`${RUTA_RESERVAS}/${encodeURIComponent(id)}/fechas`, {
+            method: 'PUT',
+            body: { fechaEntrada, fechaSalida }
+        });
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('modalFechas')).hide();
+        mostrarAlerta('Fechas de la reserva actualizadas.', 'success');
+        await cargarReservas();
+    } catch (e) {
+        mostrarAlerta(e.message, 'danger');
+    } finally {
+        boton.disabled = false;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     sesion = protegerPagina();
     if (!sesion) return;
@@ -162,11 +207,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('resFechaEntrada').min = hoyISO();
 
     document.getElementById('formReserva').addEventListener('submit', guardarReserva);
+    document.getElementById('formModificarFechas').addEventListener('submit', guardarNuevasFechas);
     document.getElementById('filtroEstadoReserva').addEventListener('change', renderizarReservas);
     document.getElementById('cuerpoTablaReservas').addEventListener('click', e => {
         const confirmar = e.target.closest('.btn-confirmar');
         const cancelar = e.target.closest('.btn-cancelar');
-        if (confirmar) {
+        const modificar = e.target.closest('.btn-modificar');
+        if (modificar) {
+            abrirModalFechas(modificar.dataset.id);
+        } else if (confirmar) {
             cambiarEstadoReserva(confirmar.dataset.id, 'confirmar', 'Reserva confirmada.');
         } else if (cancelar && confirm('¿Seguro que deseas cancelar esta reserva?')) {
             cambiarEstadoReserva(cancelar.dataset.id, 'cancelar', 'Reserva cancelada.');
