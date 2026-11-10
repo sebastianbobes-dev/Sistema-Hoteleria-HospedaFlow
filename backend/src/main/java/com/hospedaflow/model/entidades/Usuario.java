@@ -1,8 +1,16 @@
 package com.hospedaflow.model.entidades;
 
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.hospedaflow.model.enums.RolUsuario;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "rol", visible = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Gerente.class, name = "GERENTE"),
+    @JsonSubTypes.Type(value = Recepcionista.class, name = "RECEPCIONISTA"),
+    @JsonSubTypes.Type(value = Huesped.class, name = "HUESPED")
+})
 public abstract class Usuario {
     private Long id;
     private String nombre;
@@ -47,12 +55,24 @@ public abstract class Usuario {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+    public String getEmail() {
+        return correo;
+    }
+    public void setEmail(String email) {
+        this.correo = email;
+    }
 
     public String getContrasena() {
         return contrasena;
     }
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+    public String getPassword() {
+        return contrasena;
+    }
+    public void setPassword(String password) {
+        this.contrasena = password;
     }
 
     public String getTelefono() {
