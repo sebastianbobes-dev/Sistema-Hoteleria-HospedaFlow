@@ -1,1 +1,149 @@
-[]
+[ {
+  "id" : 1,
+  "codigoReserva" : "RES-AQ163T",
+  "fechaEntrada" : [ 2030, 6, 1 ],
+  "fechaSalida" : [ 2030, 6, 3 ],
+  "estado" : "CANCELADA",
+  "huesped" : {
+    "id" : 3,
+    "nombre" : "Maria Huesped",
+    "correo" : "maria@h.com",
+    "contrasena" : "1234",
+    "telefono" : "555",
+    "rol" : "HUESPED",
+    "password" : "1234",
+    "email" : "maria@h.com"
+  },
+  "habitacionAsignada" : {
+    "id" : 1,
+    "numero" : "101",
+    "tipo" : "Doble",
+    "precio" : 100.0,
+    "capacidad" : 2,
+    "estado" : "DISPONIBLE"
+  },
+  "ofertaAplicada" : null,
+  "precioTotal" : 200.0
+}, {
+  "id" : 3,
+  "codigoReserva" : "RES-AQ2OTF",
+  "fechaEntrada" : [ 2030, 5, 1 ],
+  "fechaSalida" : [ 2030, 5, 4 ],
+  "estado" : "CONFIRMADA",
+  "huesped" : {
+    "id" : 3,
+    "nombre" : "Maria Huesped",
+    "correo" : "maria@h.com",
+    "contrasena" : "1234",
+    "telefono" : "555",
+    "rol" : "HUESPED",
+    "password" : "1234",
+    "email" : "maria@h.com"
+  },
+  "habitacionAsignada" : {
+    "id" : 1,
+    "numero" : "101",
+    "tipo" : "Doble",
+    "precio" : 100.0,
+    "capacidad" : 2,
+    "estado" : "DISPONIBLE"
+  },
+  "ofertaAplicada" : {
+    "id" : 1,
+    "titulo" : "Promo Verano",
+    "descripcion" : "Descuento de verano",
+    "descuento" : 20.0,
+    "fechaInicio" : [ 2026, 1, 1 ],
+    "fechaFin" : [ 2030, 12, 31 ],
+    "activa" : true,
+    "habitacionEnOferta" : null
+  },
+  "precioTotal" : 240.0
+}, {
+  "id" : 2,
+  "codigoReserva" : "RES-AQ1CLE",
+  "fechaEntrada" : [ 2030, 6, 1 ],
+  "fechaSalida" : [ 2030, 6, 3 ],
+  "estado" : "CANCELADA",
+  "huesped" : {
+    "id" : 3,
+    "nombre" : "Maria Huesped",
+    "correo" : "maria@h.com",
+    "contrasena" : "1234",
+    "telefono" : "555",
+    "rol" : "HUESPED",
+    "password" : "1234",
+    "email" : "maria@h.com"
+  },
+  "habitacionAsignada" : {
+    "id" : 2,
+    "numero" : "102",
+    "tipo" : "Suite",
+    "precio" : 250.0,
+    "capacidad" : 4,
+    "estado" : "DISPONIBLE"
+  },
+  "ofertaAplicada" : null,
+  "precioTotal" : 500.0
+}, {
+  "id" : 4,
+  "codigoReserva" : "RES-AQ2V1L",
+  "fechaEntrada" : [ 2030, 7, 1 ],
+  "fechaSalida" : [ 2030, 7, 2 ],
+  "estado" : "PENDIENTE",
+  "huesped" : {
+    "id" : 3,
+    "nombre" : "Maria Huesped",
+    "correo" : "maria@h.com",
+    "contrasena" : "1234",
+    "telefono" : "555",
+    "rol" : "HUESPED",
+    "password" : "1234",
+    "email" : "maria@h.com"
+  },
+  "habitacionAsignada" : {
+    "id" : 2,
+    "numero" : "102",
+    "tipo" : "Suite",
+    "precio" : 250.0,
+    "capacidad" : 4,
+    "estado" : "DISPONIBLE"
+  },
+  "ofertaAplicada" : null,
+  "precioTotal" : 250.0
+}, {
+  "id" : 5,
+  "codigoReserva" : "RES-AQ7VFE",
+  "fechaEntrada" : [ 2026, 11, 12 ],
+  "fechaSalida" : [ 2026, 11, 28 ],
+  "estado" : "CANCELADA",
+  "huesped" : {
+    "id" : 4,
+    "nombre" : "az",
+    "correo" : "a@gmail.com",
+    "contrasena" : "aaaa",
+    "telefono" : "4141238888",
+    "rol" : "HUESPED",
+    "password" : "aaaa",
+    "email" : "a@gmail.com"
+  },
+  "habitacionAsignada" : {
+    "id" : 1,
+    "numero" : "101",
+    "tipo" : "Doble",
+    "precio" : 100.0,
+    "capacidad" : 2,
+    "estado" : "DISPONIBLE"
+  },
+  "ofertaAplicada" : {
+    "id" : 1,
+    "titulo" : "Promo Verano",
+    "descripcion" : "Descuento de verano",
+    "descuento" : 20.0,
+    "fechaInicio" : [ 2026, 1, 1 ],
+    "fechaFin" : [ 2030, 12, 31 ],
+    "activa" : true,
+    "habitacionEnOferta" : null
+  },
+  "precioTotal" : 1280.0
+} ]

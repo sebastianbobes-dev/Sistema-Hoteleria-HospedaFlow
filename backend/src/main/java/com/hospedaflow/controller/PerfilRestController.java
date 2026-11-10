@@ -69,6 +69,12 @@ public class PerfilRestController {
         return ResponseEntity.ok(perfilService.asignarRol(id, rol));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> eliminar(@PathVariable Long id) {
+        perfilService.eliminarPerfil(id);
+        return ResponseEntity.ok(Map.of("mensaje", "Usuario eliminado correctamente"));
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO dto) {
         Optional<Usuario> autenticado = perfilService.autenticar(dto.getEmail(), dto.getPassword());

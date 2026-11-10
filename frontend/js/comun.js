@@ -154,7 +154,9 @@ function renderNavbar(paginaActiva) {
     if (!contenedor || !sesion) return;
 
     const enlaces = [];
-    if (sesion.rol === ROLES.GERENTE) enlaces.push(['habitaciones.html', 'Habitaciones']);
+    if (sesion.rol === ROLES.GERENTE) {
+        enlaces.push(['habitaciones.html', 'Habitaciones'], ['personal.html', 'Recepcionistas']);
+    }
     enlaces.push(['reservas.html', 'Reservas'], ['ofertas.html', 'Ofertas']);
 
     const items = enlaces.map(([href, texto]) => `

@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "id": 1,
+    "titulo": "Promo Verano",
+    "descripcion": "Descuento de verano",
+    "descuento": 20.0,
+    "fechaInicio": [ 2026, 1, 1 ],
+    "fechaFin": [ 2030, 12, 31 ],
+    "activa": true,
+    "habitacionEnOferta": null
+  },
+  {
+    "id": 2,
+    "titulo": "Promo Verano Especial",
+    "descripcion": "Descuento especial de temporada",
+    "descuento": 40.0,
+    "fechaInicio": [ 2026, 1, 1 ],
+    "fechaFin": [ 2030, 12, 31 ],
+    "activa": true,
+    "habitacionEnOferta": null
+  }
+]

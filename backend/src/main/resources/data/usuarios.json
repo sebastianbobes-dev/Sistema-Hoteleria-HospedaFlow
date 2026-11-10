@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "id": 1,
+    "nombre": "Ana Gerente",
+    "correo": "ana@h.com",
+    "contrasena": "1234",
+    "telefono": "1",
+    "rol": "GERENTE",
+    "password": "1234",
+    "email": "ana@h.com"
+  },
+  {
+    "id": 2,
+    "nombre": "Rita Recepcion",
+    "correo": "rita@h.com",
+    "contrasena": "1234",
+    "telefono": "2",
+    "rol": "RECEPCIONISTA",
+    "password": "1234",
+    "email": "rita@h.com"
+  },
+  {
+    "id": 3,
+    "nombre": "Maria Huesped",
+    "correo": "maria@h.com",
+    "contrasena": "1234",
+    "telefono": "555",
+    "rol": "HUESPED",
+    "password": "1234",
+    "email": "maria@h.com"
+  },
+  {
+    "id": 4,
+    "nombre": "Andres Azuaje",
+    "correo": "a@gmail.com",
+    "contrasena": "aaaa",
+    "telefono": "4141238888",
+    "rol": "HUESPED",
+    "password": "aaaa",
+    "email": "a@gmail.com"
+  },
+  {
+    "id": 5,
+    "nombre": "Gerente Principal",
+    "correo": "gerente@hotel.com",
+    "contrasena": "1234",
+    "telefono": "04141112233",
+    "rol": "GERENTE",
+    "password": "1234",
+    "email": "gerente@hotel.com"
+  },
+  {
+    "id": 6,
+    "nombre": "Recepcionista Turno",
+    "correo": "recepcion@hotel.com",
+    "contrasena": "1234",
+    "telefono": "04144445566",
+    "rol": "RECEPCIONISTA",
+    "password": "1234",
+    "email": "recepcion@hotel.com"
+  },
+  {
+    "id": 7,
+    "nombre": "Recepcionista Test",
+    "correo": "aaaa@gmail.com",
+    "contrasena": "aaaa",
+    "telefono": "04149998877",
+    "rol": "RECEPCIONISTA",
+    "password": "aaaa",
+    "email": "aaaa@gmail.com"
+  }
+]
