@@ -1,4 +1,4 @@
-package com.hospedaflow.Controller;
+package com.hospedaflow.controller;
 
 import java.util.Map;
 

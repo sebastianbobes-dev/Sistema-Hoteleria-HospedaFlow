@@ -1,10 +1,10 @@
 /**
  * perfiles.js - Login, selección de rol y registro de huéspedes.
- * Consume: PerfilRestController -> /api/usuarios  (GET, POST)
+ * Consume: PerfilRestController -> /api/usuarios  (POST, POST /login)
  * Envía UsuarioRequestDTO: { nombre, email, password, telefono, rol }
  *
- * El backend no tiene endpoint de login, así que la autenticación se resuelve
- * consultando /api/usuarios y comparando correo, contraseña y rol.
+ * Login: POST /api/usuarios/login { email, password, rol } -> el backend valida las
+ * credenciales (401 si son incorrectas) y devuelve el usuario sin contraseña.
  */
 
 const RUTA_PERFILES = '/usuarios';
@@ -27,17 +27,12 @@ async function iniciarSesion(evento) {
     const boton = document.getElementById('btnLogin');
     boton.disabled = true;
     try {
-        const usuarios = (await apiFetch(RUTA_PERFILES)) || [];
-        // Usuario expone ambos nombres de campo: email/correo y password/contrasena
-        const usuario = usuarios.find(u =>
-            String(u.email ?? u.correo).toLowerCase() === email &&
-            (u.password ?? u.contrasena) === password &&
-            normalizar(u.rol) === rol);
-
-        if (!usuario) {
-            mostrarAlerta('Credenciales o rol incorrectos.', 'danger');
-            return;
-        }
+        // La validación la hace el backend (POST /api/usuarios/login); responde 401 si falla
+        // y nunca devuelve la contraseña.
+        const usuario = await apiFetch(RUTA_PERFILES + '/login', {
+            method: 'POST',
+            body: { email, password, rol }
+        });
         // La contraseña no se conserva en la sesión del navegador
         const sesion = { id: usuario.id, nombre: usuario.nombre, email: usuario.email ?? usuario.correo, rol: normalizar(usuario.rol) };
         guardarSesion(sesion);
