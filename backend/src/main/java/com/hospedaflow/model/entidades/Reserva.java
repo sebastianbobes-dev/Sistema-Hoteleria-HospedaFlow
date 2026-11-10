@@ -11,6 +11,7 @@ public class Reserva {
     private Huesped huesped;
     private Habitacion habitacionAsignada;
     private Oferta ofertaAplicada;
+    private double precioTotal;
 
     public Reserva() {
         this.estado = EstadoReserva.PENDIENTE;
@@ -104,6 +105,14 @@ public class Reserva {
 
     public void setOfertaAplicada(Oferta ofertaAplicada) {
         this.ofertaAplicada = ofertaAplicada;
+    }
+
+    public double getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
     }
 
     
