@@ -1,15 +1,17 @@
 /**
- * habitaciones.js - Gestión de habitaciones (solo Gerente).
+ * habitaciones.js - Consulta y gestión de habitaciones.
+ *   - Gerente: Crear, listar, filtrar y eliminar habitaciones.
+ *   - Recepcionista: Consultar disponibilidad y filtrar habitaciones.
+ *
  * Consume: HabitacionRestController -> /api/habitaciones
  *   GET    /api/habitaciones        lista habitaciones
  *   POST   /api/habitaciones        crea (HabitacionRequestDTO)
  *   DELETE /api/habitaciones/{id}   elimina
- * HabitacionRequestDTO: { numero, tipo, precioBase, capacidad }
- * La entidad Habitacion responde con: { id, numero, tipo, precio, capacidad, estado }
  */
 
 const RUTA_HABITACIONES = '/habitaciones';
 let habitaciones = [];
+let sesion = null;
 
 async function cargarHabitaciones() {
     try {
@@ -30,15 +32,17 @@ function renderizarHabitaciones() {
         return;
     }
 
+    const esGerente = sesion && sesion.rol === ROLES.GERENTE;
+
     cuerpo.innerHTML = lista.map(h => `
         <tr>
-            <td>${escapeHtml(h.numero)}</td>
+            <td><strong>${escapeHtml(h.numero)}</strong></td>
             <td>${escapeHtml(h.tipo)}</td>
             <td>${formatearMoneda(h.precio)}</td>
-            <td>${escapeHtml(h.capacidad)}</td>
+            <td>${escapeHtml(h.capacidad)} personas</td>
             <td><span class="badge estado-${escapeHtml(normalizar(h.estado))}">${escapeHtml(etiquetaEnum(h.estado))}</span></td>
             <td class="text-end">
-                <button class="btn btn-sm btn-outline-danger btn-eliminar" data-id="${escapeHtml(h.id)}">Eliminar</button>
+                ${esGerente ? `<button class="btn btn-sm btn-outline-danger btn-eliminar" data-id="${escapeHtml(h.id)}">Eliminar</button>` : '<span class="text-muted">-</span>'}
             </td>
         </tr>`).join('');
 }
@@ -56,7 +60,6 @@ async function guardarHabitacion(evento) {
         mostrarAlerta('Completa los campos con valores válidos.', 'warning');
         return;
     }
-    // Validación rápida de duplicados en el cliente (el backend también valida)
     if (habitaciones.some(h => String(h.numero) === datos.numero)) {
         mostrarAlerta(`Ya existe la habitación número ${datos.numero}.`, 'warning');
         return;
@@ -88,10 +91,23 @@ async function eliminarHabitacion(id) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (!protegerPagina([ROLES.GERENTE])) return;
+    sesion = protegerPagina([ROLES.GERENTE, ROLES.RECEPCIONISTA]);
+    if (!sesion) return;
     renderNavbar('habitaciones.html');
 
-    document.getElementById('formHabitacion').addEventListener('submit', guardarHabitacion);
+    // Si es recepcionista, ocultamos el formulario de alta (solo consulta)
+    if (sesion.rol === ROLES.RECEPCIONISTA) {
+        const colForm = document.getElementById('columnaFormularioHabitacion');
+        if (colForm) colForm.classList.add('d-none');
+        const colLista = document.getElementById('columnaListaHabitaciones');
+        if (colLista) colLista.className = 'col-12';
+        const thAcc = document.getElementById('encabezadoAccionesHabitacion');
+        if (thAcc) thAcc.classList.add('d-none');
+    } else {
+        const form = document.getElementById('formHabitacion');
+        if (form) form.addEventListener('submit', guardarHabitacion);
+    }
+
     document.getElementById('filtroEstado').addEventListener('change', renderizarHabitaciones);
     document.getElementById('cuerpoTablaHabitaciones').addEventListener('click', e => {
         const boton = e.target.closest('.btn-eliminar');
@@ -99,4 +115,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     cargarHabitaciones();
 });
-

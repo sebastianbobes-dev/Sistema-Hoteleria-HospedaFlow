@@ -77,7 +77,7 @@ async function registrarHuesped(evento) {
     }
 }
 
-/* ----------------------------- Gestión de Recepcionistas (Solo Gerente) ----------------------------- */
+/* ----------------------------- Gestión de Recepcionistas (Solo Gerente en personal.html) ----------------------------- */
 
 let recepcionistas = [];
 
@@ -155,9 +155,12 @@ async function eliminarRecepcionista(id) {
 /* ----------------------------- Inicialización ----------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Si la página tiene el formulario de gestión de recepcionistas (habitaciones.html o personal.html)
+    // Si estamos en la vista de personal (personal.html)
     const formRec = document.getElementById('formRecepcionista');
     if (formRec) {
+        const sesion = protegerPagina([ROLES.GERENTE]);
+        if (!sesion) return;
+        renderNavbar('personal.html');
         formRec.addEventListener('submit', guardarRecepcionista);
 
         const cuerpo = document.getElementById('cuerpoTablaRecepcionistas');
@@ -169,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         cargarRecepcionistas();
+        return;
     }
 
     // Si estamos en el login/registro (index.html)
