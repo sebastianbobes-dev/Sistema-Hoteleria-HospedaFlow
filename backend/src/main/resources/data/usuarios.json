@@ -70,4 +70,13 @@
   "rol" : "RECEPCIONISTA",
   "password" : "1234",
   "email" : "sara@hotel.com"
+}, {
+  "id" : 9,
+  "nombre" : "sebastian",
+  "correo" : "s@gmail.com",
+  "contrasena" : "aaaa",
+  "telefono" : "123487",
+  "rol" : "HUESPED",
+  "password" : "aaaa",
+  "email" : "s@gmail.com"
 } ]
