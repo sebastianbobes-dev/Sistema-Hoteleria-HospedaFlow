@@ -1,9 +1,11 @@
 package com.hospedaflow.model.entidades;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.hospedaflow.model.enums.RolUsuario;
+import java.util.List;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "rol", visible = true)
 @JsonSubTypes({
@@ -11,7 +13,7 @@ import com.hospedaflow.model.enums.RolUsuario;
     @JsonSubTypes.Type(value = Recepcionista.class, name = "RECEPCIONISTA"),
     @JsonSubTypes.Type(value = Huesped.class, name = "HUESPED")
 })
-public abstract class Usuario {
+public abstract class Usuario implements Identificable {
     private Long id;
     private String nombre;
     private String correo;
@@ -34,10 +36,25 @@ public abstract class Usuario {
         return this.contrasena != null && this.contrasena.equals(constrasenaIngresada);
     }
 
+    // Métodos abstractos polimórficos implementados por cada subclase (Gerente, Recepcionista, Huesped)
+    @JsonIgnore
+    public abstract List<String> obtenerPermisos();
+
+    @JsonIgnore
+    public abstract String obtenerDescripcionRol();
+
+    @JsonIgnore
+    public abstract boolean puedeGestionarHabitaciones();
+
+    @JsonIgnore
+    public abstract boolean puedeGestionarPersonal();
+
     //getter y setter
+    @Override
     public Long getId() {
         return id;
     }
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

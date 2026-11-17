@@ -1,7 +1,7 @@
 package com.hospedaflow.model.entidades;
 import java.time.LocalDate;
 
-public class Oferta {
+public class Oferta implements Identificable {
     private Long id;
     private String titulo;
     private String descripcion;
@@ -32,11 +32,24 @@ public class Oferta {
         return activa && (fechaInicio != null && !hoy.isBefore(fechaInicio)) && (fechaFin != null && !hoy.isAfter(fechaFin));
     }
 
+    /**
+     * Comportamiento encapsulado de dominio: calcula el descuento aplicable sobre un subtotal.
+     */
+    public double calcularMontoDescuento(double subtotal) {
+        if (!esVigente() || subtotal <= 0) {
+            return 0.0;
+        }
+        double factor = this.descuento > 1.0 ? (this.descuento / 100.0) : this.descuento;
+        return subtotal * factor;
+    }
+
     //getter y setter
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

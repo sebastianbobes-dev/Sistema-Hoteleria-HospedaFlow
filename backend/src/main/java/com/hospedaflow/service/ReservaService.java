@@ -1,7 +1,6 @@
 package com.hospedaflow.service;
 
 import com.hospedaflow.model.entidades.Habitacion;
-import com.hospedaflow.model.entidades.Oferta;
 import com.hospedaflow.model.entidades.Reserva;
 import com.hospedaflow.model.enums.EstadoHabitacion;
 import com.hospedaflow.model.enums.EstadoReserva;
@@ -10,7 +9,6 @@ import com.hospedaflow.Repositorio.ReservaJsonRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -151,34 +149,10 @@ public class ReservaService {
     }
 
     public double calcularTarifa(Reserva reserva) {
-        if (reserva == null || reserva.getHabitacionAsignada() == null) {
+        if (reserva == null) {
             return 0.0;
         }
-
-        LocalDate entrada = reserva.getFechaEntrada();
-        LocalDate salida = reserva.getFechaSalida();
-        if (entrada == null || salida == null) {
-            return 0.0;
-        }
-
-        long dias = ChronoUnit.DAYS.between(entrada, salida);
-        if (dias <= 0) {
-            dias = 1; // Mínimo 1 noche
-        }
-
-        double precioBasePorNoche = reserva.getHabitacionAsignada().getPrecio();
-        double subtotal = dias * precioBasePorNoche;
-
-        // Descuento si aplica oferta vigente
-        Oferta oferta = reserva.getOfertaAplicada();
-        if (oferta != null && oferta.esVigente()) {
-            double desc = oferta.getDescuento();
-            double factorDescuento = desc > 1.0 ? (desc / 100.0) : desc;
-            double montoDescuento = subtotal * factorDescuento;
-            subtotal = Math.max(0.0, subtotal - montoDescuento);
-        }
-
-        return subtotal;
+        return reserva.calcularPrecioFinal();
     }
 
     public boolean verificarDisponibilidad(Long habitacionId, LocalDate entrada, LocalDate salida, Long reservaExcluidaId) {

@@ -6,37 +6,20 @@ import com.hospedaflow.util.JsonDataBase;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public class ReservaJsonRepository {
+public class ReservaJsonRepository extends AbstractJsonRepository<Reserva> {
 
-    private final String RUTA_ARCHIVO = "src/main/resources/data/reservas.json";
-
-    private final JsonDataBase jsonDatabase;
-
-    ReservaJsonRepository(JsonDataBase jsonDatabase) {
-        this.jsonDatabase = jsonDatabase;
+    public ReservaJsonRepository(JsonDataBase jsonDatabase) {
+        super(jsonDatabase, "src/main/resources/data/reservas.json");
     }
 
-    public List<Reserva> obtenerTodas() {
-        return jsonDatabase.leerListaDeJson(RUTA_ARCHIVO, new TypeReference<List<Reserva>>() {});
-    }
-
-    public Optional<Reserva> buscarPorId(Long id) {
-        return obtenerTodas().stream()
-                .filter(r -> r.getId().equals(id))
-                .findFirst();
-    }
-
-    public void guardar(Reserva reserva) {
-        List<Reserva> reservas = obtenerTodas();
-        reservas.removeIf(r -> r.getId().equals(reserva.getId()));
-        reservas.add(reserva);
-        jsonDatabase.guardarLista(RUTA_ARCHIVO, reservas);
+    @Override
+    protected TypeReference<List<Reserva>> getTypeReference() {
+        return new TypeReference<List<Reserva>>() {};
     }
 
     public void actualizar(Reserva reserva) {
-        guardar(reserva); // Reutiliza la lógica de reemplazo
+        guardar(reserva);
     }
 }

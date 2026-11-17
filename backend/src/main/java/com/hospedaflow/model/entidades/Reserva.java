@@ -1,8 +1,9 @@
 package com.hospedaflow.model.entidades;
 import com.hospedaflow.model.enums.EstadoReserva;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
-public class Reserva {
+public class Reserva implements Identificable {
     private Long id;
     private String codigoReserva;
     private LocalDate fechaEntrada;
@@ -23,7 +24,7 @@ public class Reserva {
         this.codigoReserva = codigoReserva;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
-        this.estado = EstadoReserva.PENDIENTE;
+        this.estado = estado != null ? estado : EstadoReserva.PENDIENTE;
         this.huesped = huesped;
     }
 
@@ -41,12 +42,39 @@ public class Reserva {
         this.habitacionAsignada = habitacion;
     }
 
+    /**
+     * Comportamiento de dominio encapsulado en la entidad: calcula el total de noches.
+     */
+    public long calcularNoches() {
+        if (this.fechaEntrada == null || this.fechaSalida == null) {
+            return 0;
+        }
+        long dias = ChronoUnit.DAYS.between(this.fechaEntrada, this.fechaSalida);
+        return Math.max(1L, dias);
+    }
+
+    /**
+     * Comportamiento de dominio encapsulado: colabora con Habitacion y Oferta para calcular
+     * la tarifa final aplicando el descuento si la oferta está vigente.
+     */
+    public double calcularPrecioFinal() {
+        if (this.habitacionAsignada == null || this.fechaEntrada == null || this.fechaSalida == null) {
+            return 0.0;
+        }
+        double subtotal = calcularNoches() * this.habitacionAsignada.getPrecio();
+        if (this.ofertaAplicada != null) {
+            subtotal = Math.max(0.0, subtotal - this.ofertaAplicada.calcularMontoDescuento(subtotal));
+        }
+        return subtotal;
+    }
 
     // Getters y Setters
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

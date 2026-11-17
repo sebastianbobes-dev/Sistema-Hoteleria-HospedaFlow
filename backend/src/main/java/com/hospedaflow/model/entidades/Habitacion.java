@@ -1,6 +1,6 @@
 package com.hospedaflow.model.entidades;
 import com.hospedaflow.model.enums.EstadoHabitacion;
-public class Habitacion {
+public class Habitacion implements Identificable {
     private Long id;
     private String numero;
     private String tipo;
@@ -28,10 +28,12 @@ public class Habitacion {
         return this.estado == EstadoHabitacion.DISPONIBLE;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
