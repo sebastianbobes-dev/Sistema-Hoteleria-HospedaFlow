@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//codigo generado totalmente con ia.
+/**
+ * Utilidad genérica para lectura y persistencia de listas de entidades en archivos JSON
+ * mediante Jackson ObjectMapper y soporte de fechas modernas (JavaTimeModule).
+ */
 @Component
 public class JsonDataBase {
 
